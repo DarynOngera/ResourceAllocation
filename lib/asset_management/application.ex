@@ -8,6 +8,7 @@ defmodule AssetManagement.Application do
   @impl true
   def start(_type, _args) do
     children = [
+      AssetManagement.Resources,
       AssetManagementWeb.Telemetry,
       {DNSCluster, query: Application.get_env(:asset_management, :dns_cluster_query) || :ignore},
       {Phoenix.PubSub, name: AssetManagement.PubSub},

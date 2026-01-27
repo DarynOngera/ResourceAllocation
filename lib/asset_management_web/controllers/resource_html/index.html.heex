@@ -1,22 +1,97 @@
 <h1>Resources</h1>
 
-<table border="1" cellpadding="6">
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>Name</th>
-      <th>Type</th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <%= for resource <- @resources do %>
-      <tr>
-        <td><%= resource.id %></td>
-        <td><%= resource.name %></td>
-        <td><%= resource.type %></td>
-      </tr>
+<%= if @result do %>
+  <div style="background: #e8f5e9; padding: 1rem; margin: 1rem 0; border-radius: 4px;">
+    <h3 style="color: #000;">Result:</h3>
+    <%= cond do %>
+      <% is_list(@result) -> %>
+        <table style="width: 100%; border-collapse: collapse;">
+          <thead>
+            <tr style="background: #4caf50; color: white;">
+              <th style="padding: 0.5rem; border: 1px solid #ddd; color: white;">ID</th>
+              <th style="padding: 0.5rem; border: 1px solid #ddd; color: white;">Name</th>
+              <th style="padding: 0.5rem; border: 1px solid #ddd; color: white;">Type</th>
+            </tr>
+          </thead>
+          <tbody>
+            <%= for resource <- @result do %>
+              <tr>
+                <td style="padding: 0.5rem; border: 1px solid #ddd; color: #000;"><%= resource.id %></td>
+                <td style="padding: 0.5rem; border: 1px solid #ddd; color: #000;"><%= resource.name %></td>
+                <td style="padding: 0.5rem; border: 1px solid #ddd; color: #000;"><%= resource.type %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      
+      <% is_map(@result) -> %>
+        <table style="width: 100%; border-collapse: collapse;">
+          <thead>
+            <tr style="background: #4caf50; color: white;">
+              <th style="padding: 0.5rem; border: 1px solid #ddd; color: white;">ID</th>
+              <th style="padding: 0.5rem; border: 1px solid #ddd; color: white;">Name</th>
+              <th style="padding: 0.5rem; border: 1px solid #ddd; color: white;">Type</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="padding: 0.5rem; border: 1px solid #ddd; color: #000;"><%= @result.id %></td>
+              <td style="padding: 0.5rem; border: 1px solid #ddd; color: #000;"><%= @result.name %></td>
+              <td style="padding: 0.5rem; border: 1px solid #ddd; color: #000;"><%= @result.type %></td>
+            </tr>
+          </tbody>
+        </table>
+      
+      <% true -> %>
+        <pre style="color: #000;"><%= inspect(@result, pretty: true) %></pre>
     <% end %>
-  </tbody>
-</table>
+  </div>
+<% end %>
 
+<hr/>
+<section>
+  <h2>List Resources</h2>
+  <form method="get" action="/resources">
+    <input type="hidden" name="action" value="list" />
+    <button type="submit">List All</button>
+  </form>
+</section>
+<hr/>
+<section>
+  <h2>Get Resource</h2>
+  <form method="get" action="/resources">
+    <input type="hidden" name="action" value="get" />
+    <input type="number" name="id" placeholder="Resource ID" required />
+    <button type="submit">Fetch</button>
+  </form>
+</section>
+<hr/>
+<section>
+  <h2>Create Resource</h2>
+  <form method="get" action="/resources">
+    <input type="hidden" name="action" value="create" />
+    <input type="text" name="name" placeholder="Name" required />
+    <input type="text" name="type" placeholder="Type" required />
+    <button type="submit">Create</button>
+  </form>
+</section>
+<hr/>
+<section>
+  <h2>Update Resource</h2>
+  <form method="get" action="/resources">
+    <input type="hidden" name="action" value="update" />
+    <input type="number" name="id" placeholder="Resource ID" required />
+    <input type="text" name="name" placeholder="New Name" />
+    <input type="text" name="type" placeholder="Type" />
+    <button type="submit">Update</button>
+  </form>
+</section>
+<hr/>
+<section>
+  <h2>Delete Resource</h2>
+  <form method="get" action="/resources">
+    <input type="hidden" name="action" value="delete" />
+    <input type="number" name="id" placeholder="Resource ID" required />
+    <button type="submit">Delete</button>
+  </form>
+</section>
