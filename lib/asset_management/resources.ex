@@ -14,18 +14,19 @@ defmodule AssetManagement.Resources do
     #Enum.find(list, &(&1.id == id) )
   end
 
-  def create() do
-    Agent.get_and_update(__MODULE__, fn list ->
-    id = next_id(list)
-    new_resource = %{id: id, name: "Macbook", type: "Hardware"}
-    updated_list = list ++ [new_resource]
-    {new_resource, updated_list}
+  def create(attrs) do
+    Agent.get_and_update(__MODULE__, fn current_list ->
+    id = next_id(current_list)
+    new_list = Map.put(attrs, :id, id)
+
+    updated_list = current_list ++ [new_list] 
+    {new_list, updated_list}
     end)
   end
 
   def delete() do
     Agent.get_and_update(__MODULE__, fn current_list ->
-      id = 2
+      id = 1
       case Enum.find(current_list,fn list -> list.id == id end) do
         nil -> current_list
         item -> updated_list = current_list -- [item]
