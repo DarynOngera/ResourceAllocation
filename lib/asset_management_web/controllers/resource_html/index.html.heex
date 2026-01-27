@@ -1,0 +1,22 @@
+<h1>Resources</h1>
+
+<table border="1" cellpadding="6">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Type</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <%= for resource <- @resources do %>
+      <tr>
+        <td><%= resource.id %></td>
+        <td><%= resource.name %></td>
+        <td><%= resource.type %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+

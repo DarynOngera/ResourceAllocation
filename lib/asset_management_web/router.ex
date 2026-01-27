@@ -17,7 +17,7 @@ defmodule AssetManagementWeb.Router do
   scope "/", AssetManagementWeb do
     pipe_through :browser
 
-    get "/", PageController, :home
+    get "/resources", ResourceController, :index
   end
 
   # Other scopes may use custom stacks.
