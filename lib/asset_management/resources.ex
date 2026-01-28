@@ -60,7 +60,7 @@ end
   def next_id(list) do 
     list
     |> Enum.map(& &1.id)
-    |> Enum.max(fn -> 0 end)
+    |> Enum.max()
     |> Kernel.+(1)
   end
 end
