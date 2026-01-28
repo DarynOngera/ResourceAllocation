@@ -10,14 +10,8 @@ defmodule AssetManagementWeb.ResourceController do
         
       "get" ->
         id = String.to_integer(params["id"])
-        case Resources.get_resource(id) do
-          nil ->
-            conn
-            |> put_flash(:error, "Resource not found")
-            |> render(:index, result: nil)
-          resource ->
-            render(conn, :index, result: resource)
-        end
+        resource = Resources.get_resource(id)
+        render(conn, :index, result: resource)
         
       "create" ->
         attrs = %{
@@ -25,48 +19,23 @@ defmodule AssetManagementWeb.ResourceController do
           type: params["type"]
         }
         new_resource = Resources.create(attrs)
-        conn
-        |> put_flash(:info, "Resource created successfully")
-        |> render(:index, result: new_resource)
+        render(conn, :index, result: new_resource)
         
       "update" ->
-        id = parse_id(params["id"])
+        id = String.to_integer(params["id"])
         attrs = %{id: id}
         attrs = if params["name"], do: Map.put(attrs, :name, params["name"]), else: attrs
         attrs = if params["type"], do: Map.put(attrs, :type, params["type"]), else: attrs
         
-        case Resources.update(attrs) do
-          nil ->
-            conn
-            |> put_flash(:error, "Resource not found")
-            |> render(:index, result: nil)
-          updated ->
-            conn
-            |> put_flash(:info, "Resource updated successfully")
-            |> render(:index, result: updated)
-        end
+        updated = Resources.update(attrs)
+        render(conn, :index, result: updated)
         
       "delete" ->
-        id = parse_id(params["id"])
-        case Resources.delete(id) do
-          nil ->
-            conn
-            |> put_flash(:error, "Resource not found")
-            |> render(:index, result: nil)
-          deleted ->
-            conn
-            |> put_flash(:info, "Resource deleted successfully")
-            |> render(:index, result: deleted)
-        end
-        
+        id = String.to_integer(params["id"])
+        updated = Resources.delete(id)
+        render(conn, :index, result: updated)
       _ -> 
-        conn
-        |> put_flash(:error, "Invalid action")
-        |> render(:index, result: nil)
+        render(conn, :index, result: nil)
     end
   end
-
-  defp parse_id(id) when is_integer(id), do: id
-  defp parse_id(id) when is_binary(id), do: String.to_integer(id)
-  defp parse_id(_), do: nil
 end
