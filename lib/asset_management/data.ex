@@ -8,7 +8,21 @@ defmodule AssetManagement.Data do
 
   def users do 
     [
-      %{id: 1, name: "Daryn Ongera"}
+      %{id: 1, name: "Daryn Ongera"},
+      %{id: 2, name: "Obi Wan"},
+      %{id: 3, name: "John Doe"}
+    ]
+  end
+
+  def allocations do
+    [
+      %{
+        id: 1,
+        user: "Daryn Ongera", 
+        resource: "Lenovo", 
+        user_id: 1, 
+        resource_id: 1
+      }
     ]
   end
 end
