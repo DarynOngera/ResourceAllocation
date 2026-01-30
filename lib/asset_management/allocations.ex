@@ -32,18 +32,18 @@ defmodule AssetManagement.Allocations do
   end
 
   def create_allocation(user_id, resource_id) do
-    case verify_resource(resource_id) do 
-      {:ok, _} ->
+    with false <- is_allocated(resource_id),
+      {:ok, _} <- verify_resource(resource_id),
+      do: 
         Agent.get_and_update(__MODULE__, fn current_list ->
           id = next_id(current_list)
+          time = NaiveDateTime.local_now() |> NaiveDateTime.truncate(:second)
           resource = Enum.find(Resources.list_resources(), &(&1.id == resource_id))
           user = Enum.find(Users.list_users(), &(&1.id == user_id))
-          attrs = %{user: user.name, resource: resource.name, user_id: user.id, resource_id: resource.id}
+          attrs = %{user: user.name, resource: resource.name, resource_type: resource.type, user_id: user.id, resource_id: resource.id, allocated_at: time}
           new_allocation = Map.put(attrs, :id, id)
           {new_allocation, [new_allocation | current_list]}
         end)
-      {:error, _} -> "resource not found"
-    end
   end
 
   
@@ -64,6 +64,12 @@ defmodule AssetManagement.Allocations do
       resource -> {:ok, resource}
     end
   end
+
+  def is_allocated(resource_id) do
+    Agent.get(__MODULE__, fn current_list ->
+      Enum.any?(current_list, &(&1.resource_id == resource_id ))
+    end)
+  end 
 
   def next_id(list) do 
     list
