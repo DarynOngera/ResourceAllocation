@@ -2,23 +2,22 @@
   <!-- Page Header -->
   <div class="flex items-center justify-between">
     <div>
-      <h1 class="text-3xl font-bold text-slate-900 dark:text-slate-100">Resources</h1>
+      <h1 class="text-3xl font-bold text-slate-900 dark:text-slate-100">Users</h1>
       <p class="mt-1 text-sm text-slate-600 dark:text-slate-400">
-        Manage and track available resources
+        Manage user accounts and information
       </p>
     </div>
     <div>
-    <a href="/users" class="inline-flex items-center px-4 py-2 bg-slate-600 hover:bg-slate-700 text-white text-sm font-medium rounded-lg transition-colors">
-        Users
+    <a href="/resources" class="inline-flex items-center px-4 py-2 bg-slate-600 hover:bg-slate-700 text-white text-sm font-medium rounded-lg transition-colors">
+      Resources
     </a>
     <a href="/allocations" class="inline-flex items-center px-4 py-2 bg-slate-600 hover:bg-slate-700 text-white text-sm font-medium rounded-lg transition-colors">
-        Allocations
+      Allocations
     </a>
     </div>
- 
   </div>
 
-  <!-- Results Display -->
+   <!-- Results Display -->
   <%= if @result do %>
     <div class="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden">
       <%= cond do %>
@@ -29,22 +28,21 @@
                 <tr>
                   <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider">ID</th>
                   <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider">Name</th>
-                  <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider">Type</th>
                 </tr>
               </thead>
               <tbody class="bg-white dark:bg-slate-800 divide-y divide-slate-200 dark:divide-slate-700">
-                <%= for resource <- @result do %>
+                <%= for user <- @result do %>
                   <tr class="hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors">
                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-900 dark:text-slate-100">
-                      #<%= resource.id %>
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-900 dark:text-slate-100">
-                      <%= resource.name %>
+                      #<%= user.id %>
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
-                      <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300">
-                        <%= resource.type %>
-                      </span>
+                      <div class="flex items-center gap-2">
+                        <div class="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center text-white font-medium text-xs">
+                          <%= String.first(user.name) %>
+                        </div>
+                        <span class="text-sm text-slate-900 dark:text-slate-100"><%= user.name %></span>
+                      </div>
                     </td>
                   </tr>
                 <% end %>
@@ -55,10 +53,10 @@
         <% is_list(@result) && length(@result) == 0 -> %>
           <div class="text-center py-12">
             <svg class="mx-auto h-12 w-12 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"/>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
             </svg>
-            <h3 class="mt-2 text-sm font-medium text-slate-900 dark:text-slate-100">No resources</h3>
-            <p class="mt-1 text-sm text-slate-500 dark:text-slate-400">Start by creating a new resource.</p>
+            <h3 class="mt-2 text-sm font-medium text-slate-900 dark:text-slate-100">No users</h3>
+            <p class="mt-1 text-sm text-slate-500 dark:text-slate-400">Start by creating a new user.</p>
           </div>
         
         <% is_map(@result) -> %>
@@ -68,7 +66,6 @@
                 <tr>
                   <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider">ID</th>
                   <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider">Name</th>
-                  <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider">Type</th>
                 </tr>
               </thead>
               <tbody class="bg-white dark:bg-slate-800">
@@ -76,13 +73,13 @@
                   <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-900 dark:text-slate-100">
                     #<%= @result.id %>
                   </td>
-                  <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-900 dark:text-slate-100">
-                    <%= @result.name %>
-                  </td>
                   <td class="px-6 py-4 whitespace-nowrap">
-                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300">
-                      <%= @result.type %>
-                    </span>
+                    <div class="flex items-center gap-2">
+                      <div class="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center text-white font-medium text-xs">
+                        <%= String.first(@result.name) %>
+                      </div>
+                      <span class="text-sm text-slate-900 dark:text-slate-100"><%= @result.name %></span>
+                    </div>
                   </td>
                 </tr>
               </tbody>
@@ -100,7 +97,7 @@
   <!-- Action Cards Grid -->
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
     
-    <!-- List Resources Card -->
+    <!-- List Users Card -->
     <div class="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 p-6 hover:shadow-md transition-shadow">
       <div class="flex items-center gap-3 mb-4">
         <div class="w-10 h-10 rounded-lg bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center">
@@ -108,12 +105,12 @@
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"/>
           </svg>
         </div>
-        <h3 class="text-lg font-semibold text-slate-900 dark:text-slate-100">List Resources</h3>
+        <h3 class="text-lg font-semibold text-slate-900 dark:text-slate-100">List Users</h3>
       </div>
       <p class="text-sm text-slate-600 dark:text-slate-400 mb-4">
-        View all available resources
+        View all registered users
       </p>
-      <form method="get" action="/resources">
+      <form method="get" action="/users">
         <input type="hidden" name="action" value="list" />
         <button type="submit" class="w-full px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg transition-colors">
           List All
@@ -121,7 +118,7 @@
       </form>
     </div>
 
-    <!-- Get Resource Card -->
+    <!-- Get User Card -->
     <div class="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 p-6 hover:shadow-md transition-shadow">
       <div class="flex items-center gap-3 mb-4">
         <div class="w-10 h-10 rounded-lg bg-emerald-100 dark:bg-emerald-900/30 flex items-center justify-center">
@@ -129,19 +126,19 @@
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
           </svg>
         </div>
-        <h3 class="text-lg font-semibold text-slate-900 dark:text-slate-100">Get Resource</h3>
+        <h3 class="text-lg font-semibold text-slate-900 dark:text-slate-100">Get User</h3>
       </div>
-      <form method="get" action="/resources" class="space-y-3">
+      <form method="get" action="/users" class="space-y-3">
         <input type="hidden" name="action" value="get" />
         <div>
           <label for="get-id" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
-            Resource ID
+            User ID
           </label>
           <input 
             type="number" 
             id="get-id"
-            name="resource_id" 
-            placeholder="Enter resource ID" 
+            name="user_id" 
+            placeholder="Enter user ID" 
             required 
             class="w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 text-sm focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
           />
@@ -152,17 +149,17 @@
       </form>
     </div>
 
-    <!-- Create Resource Card -->
+    <!-- Create User Card -->
     <div class="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 p-6 hover:shadow-md transition-shadow">
       <div class="flex items-center gap-3 mb-4">
         <div class="w-10 h-10 rounded-lg bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center">
           <svg class="w-5 h-5 text-purple-600 dark:text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"/>
           </svg>
         </div>
-        <h3 class="text-lg font-semibold text-slate-900 dark:text-slate-100">Create Resource</h3>
+        <h3 class="text-lg font-semibold text-slate-900 dark:text-slate-100">Create User</h3>
       </div>
-      <form method="get" action="/resources" class="space-y-3">
+      <form method="get" action="/users" class="space-y-3">
         <input type="hidden" name="action" value="create" />
         <div>
           <label for="create-name" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
@@ -172,20 +169,7 @@
             type="text" 
             id="create-name"
             name="name" 
-            placeholder="Resource name" 
-            required 
-            class="w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 text-sm focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-          />
-        </div>
-        <div>
-          <label for="create-type" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
-            Type
-          </label>
-          <input 
-            type="text" 
-            id="create-type"
-            name="type" 
-            placeholder="Resource type" 
+            placeholder="User name" 
             required 
             class="w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 text-sm focus:ring-2 focus:ring-purple-500 focus:border-transparent"
           />
@@ -196,7 +180,7 @@
       </form>
     </div>
 
-    <!-- Update Resource Card -->
+    <!-- Update User Card -->
     <div class="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 p-6 hover:shadow-md transition-shadow">
       <div class="flex items-center gap-3 mb-4">
         <div class="w-10 h-10 rounded-lg bg-amber-100 dark:bg-amber-900/30 flex items-center justify-center">
@@ -204,19 +188,19 @@
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
           </svg>
         </div>
-        <h3 class="text-lg font-semibold text-slate-900 dark:text-slate-100">Update Resource</h3>
+        <h3 class="text-lg font-semibold text-slate-900 dark:text-slate-100">Update User</h3>
       </div>
-      <form method="get" action="/resources" class="space-y-3">
+      <form method="get" action="/users" class="space-y-3">
         <input type="hidden" name="action" value="update" />
         <div>
           <label for="update-id" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
-            Resource ID
+            User ID
           </label>
           <input 
             type="number" 
             id="update-id"
-            name="resource_id" 
-            placeholder="Resource ID" 
+            name="user_id" 
+            placeholder="User ID" 
             required 
             class="w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 text-sm focus:ring-2 focus:ring-amber-500 focus:border-transparent"
           />
@@ -229,19 +213,7 @@
             type="text" 
             id="update-name"
             name="name" 
-            placeholder="New name (optional)" 
-            class="w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 text-sm focus:ring-2 focus:ring-amber-500 focus:border-transparent"
-          />
-        </div>
-        <div>
-          <label for="update-type" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
-            Type
-          </label>
-          <input 
-            type="text" 
-            id="update-type"
-            name="type" 
-            placeholder="Type (optional)" 
+            placeholder="New name" 
             class="w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 text-sm focus:ring-2 focus:ring-amber-500 focus:border-transparent"
           />
         </div>
@@ -251,7 +223,7 @@
       </form>
     </div>
 
-    <!-- Delete Resource Card -->
+    <!-- Delete User Card -->
     <div class="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 p-6 hover:shadow-md transition-shadow">
       <div class="flex items-center gap-3 mb-4">
         <div class="w-10 h-10 rounded-lg bg-red-100 dark:bg-red-900/30 flex items-center justify-center">
@@ -259,19 +231,19 @@
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
           </svg>
         </div>
-        <h3 class="text-lg font-semibold text-slate-900 dark:text-slate-100">Delete Resource</h3>
+        <h3 class="text-lg font-semibold text-slate-900 dark:text-slate-100">Delete User</h3>
       </div>
-      <form method="get" action="/resources" class="space-y-3">
+      <form method="get" action="/users" class="space-y-3">
         <input type="hidden" name="action" value="delete" />
         <div>
           <label for="delete-id" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
-            Resource ID
+            User ID
           </label>
           <input 
             type="number" 
             id="delete-id"
-            name="resource_id" 
-            placeholder="Enter resource ID" 
+            name="user_id" 
+            placeholder="Enter user ID" 
             required 
             class="w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 text-sm focus:ring-2 focus:ring-red-500 focus:border-transparent"
           />

@@ -16,9 +16,12 @@ defmodule AssetManagementWeb.Router do
 
   scope "/", AssetManagementWeb do
     pipe_through :browser
+    get "/", PageController, :home
 
     get "/resources", ResourceController, :index
     get "/users", UserController, :index
+    get "/allocations", AllocationController, :index
+    # live "/filter", FilterLive
   end
 
   # Other scopes may use custom stacks.
