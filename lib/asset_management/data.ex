@@ -15,13 +15,16 @@ defmodule AssetManagement.Data do
   end
 
   def allocations do
+    time = NaiveDateTime.local_now() |> NaiveDateTime.truncate(:second)
     [
       %{
         id: 1,
         user: "Daryn Ongera", 
-        resource: "Lenovo", 
+        resource: "Lenovo",
+        resource_type: "hardware",
         user_id: 1, 
-        resource_id: 1
+        resource_id: 1,
+        allocated_at: time 
       }
     ]
   end
