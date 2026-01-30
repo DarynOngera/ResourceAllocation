@@ -2,6 +2,6 @@ defmodule AssetManagementWeb.PageController do
   use AssetManagementWeb, :controller
 
   def home(conn, _params) do
-    render(conn, :home)
+    redirect(conn, to: ~p"/users")
   end
 end
