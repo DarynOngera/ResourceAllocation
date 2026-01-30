@@ -9,7 +9,7 @@ defmodule AssetManagementWeb.ResourceController do
         render(conn, :index, result: resources)
         
       "get" ->
-        id = String.to_integer(params["id"])
+        id = String.to_integer(params["resource_id"])
         resource = Resources.get_resource(id)
         render(conn, :index, result: resource)
         
@@ -22,7 +22,7 @@ defmodule AssetManagementWeb.ResourceController do
         render(conn, :index, result: new_resource)
         
       "update" ->
-        id = String.to_integer(params["id"])
+        id = String.to_integer(params["resource_id"])
         attrs = %{id: id}
         attrs = if params["name"], do: Map.put(attrs, :name, params["name"]), else: attrs
         attrs = if params["type"], do: Map.put(attrs, :type, params["type"]), else: attrs
@@ -31,7 +31,7 @@ defmodule AssetManagementWeb.ResourceController do
         render(conn, :index, result: updated)
         
       "delete" ->
-        id = String.to_integer(params["id"])
+        id = String.to_integer(params["resource_id"])
         updated = Resources.delete(id)
         render(conn, :index, result: updated)
       _ -> 
