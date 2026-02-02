@@ -3,7 +3,7 @@ defmodule AssetManagementWeb.UserController do
   alias AssetManagement.Users
 
   def index(conn, params) do
-    case Map.get(params, ["action", "query"] ) do
+    case Map.get(params, "action" ) do
       "list" -> 
         users = Users.list_users()
         render(conn, :index, result: users)

@@ -43,7 +43,8 @@ defmodule AssetManagement.Users do
   def delete_user(id) do
     Agent.get_and_update(__MODULE__, fn current_list ->
      case Enum.find(current_list, fn list -> list.id == id end) do
-      nil -> current_list
+      nil ->
+        {current_list, current_list}
       item -> updated_list = current_list -- [item]
           {updated_list, updated_list}
       end
